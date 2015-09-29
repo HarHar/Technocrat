@@ -1,5 +1,7 @@
+#!/usr/bin/env python2
 # -*- encoding: utf8 -*-
-if __name__ == '__main__': exit(1)
+import sys
+sys.dont_write_bytecode = True
 
 import eventlet
 import os
@@ -61,9 +63,7 @@ def getContent(sid, which):
 
 fapp.debug = True
 fapp.config['SECRET_KEY'] = 'hunter2'
-#if __name__ == '__main__':
-
-def start():
+if __name__ == '__main__':
 	app = socketio.Middleware(sio, fapp)
 	eventlet.wsgi.server(eventlet.listen(('', 8080)), app)
 
