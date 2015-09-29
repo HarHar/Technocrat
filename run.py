@@ -1,14 +1,17 @@
 #!/usr/bin/env python2
 # -*- encoding: utf8 -*-
 import sys
-import threading
+import eventlet
 import webstuff
+import ircstuff
+import time
 sys.dont_write_bytecode = True
 
 # start web stuff
-webThread = threading.Thread(target=webstuff.start())
-webThread.setDaemon(True)
-webThread.start()
+eventlet.spawn(webstuff.start)
 
 # start irc stuff
-pass
+eventlet.spawn(ircstuff.start)
+
+while True:
+	eventlet.sleep(3600)
