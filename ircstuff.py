@@ -6,13 +6,13 @@ sys.dont_write_bytecode = True
 from girc import Client
 
 nick = 'Technocrat'
-client = Client('irc.cyberdynesystems.net', nick=nick)
+client = Client('irc.broke-it.com', nick=nick)
 channel = client.channel('#/g/bots')
 
 channel.join()
-channel.msg('Hello')
+#channel.msg('Hello')
 
-@client.handler(command='PRIVMSG', payload=lambda value: nick in value.lower())
+@client.handler(command='PRIVMSG')
 def mentioned(client, msg):
 	channel.msg("Hello, {}".format(msg.sender))
 
