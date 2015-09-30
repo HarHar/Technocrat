@@ -23,6 +23,7 @@ class Database(object):
 				f = open(self.dbfile, 'r')
 				self.data = json.loads(f.read())
 				f.close()
+				return
 		self.save()
 
 db = Database()
