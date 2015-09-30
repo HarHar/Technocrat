@@ -15,6 +15,7 @@ channels = ['#Technocrat']
 client = Client('localhost', nick=nick)
 for channel in channels: client.channel(channel).join()
 
+import storage
 import modules
 
 # good things to remember:
