@@ -1,107 +1,92 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # -*- encoding: utf8 -*-
 import sys
 sys.dont_write_bytecode = True
 
-import logging
-logging.basicConfig()
+import irc.bot
+import irc.strings
+from irc.client import ip_numstr_to_quad, ip_quad_to_numstr
 
-from girc import Client
-# db still not made, need to 
-# load these things up from the bd
-# when it's done
-nick = 'TechBot'
-channels = ['#Technocrat']
-client = Client('irc.broke-it.com', nick=nick)
-for channel in channels: client.channel(channel).join()
+class TechBot(irc.bot.SingleServerIRCBot):
+	# cheat sheet
+	# self.disconnect -> disconnects
+	# self.die() -> dies
+	# e -> event??
+	# self.connection -> c
+	# c.notice(nick, msg)
+	# self.channels -> list of channel objects
 
-import storage
-import modules
+	def __init__(self, channel, nickname, server, port=6667):
+		irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, nickname)
+		self.channel = channel
 
-# good things to remember:
-# client.msg(target, msg)
-# client._channels = list of channels
-# client._channels['#/g/bots'].users['@'] = list of operators on #/g/bots (includes @ and up)
-# client._channels['#/g/bots'].only('@') = list of operators on #/g/bots (ONLY @)
+	def on_nicknameinuse(self, c, e):
+		c.nick('_' + c.get_nickname() + '_')
 
-@client.handler(command='PRIVMSG')
-def handle_privmsg(client, payload):
-	"""
-		Handles messages
+	def on_welcome(self, c, e):
+		c.join(self.channel)
 
-		payload properties:	
-			sender = who sent "harhar"
-			target = who received (chan/user) "#/g/bots"
-			host = sender's host "my.vhost"
-			user = username part of host "~harhar" from "~harhar@my.vhost"
-			params[1] = message
-	"""
-	pass
+	def on_privmsg(self, c, e):
+		self.do_command(e, e.arguments[0])
 
-@client.handler(command='KICK')
-def handle_kick(client, payload):
-	"""
-		Handles kicks
-			- payload.params == ['#channel', 'kickednick', 'reason']
+	def on_pubmsg(self, c, e):
+		message = e.arguments[0]
+		#a = e.arguments[0].split(":", 1)
+		#if len(a) > 1 and irc.strings.lower(a[0]) == irc.strings.lower(self.connection.get_nickname()):
+		#	self.do_command(e, a[1].strip())
+		#return
 
-	"""
-	pass
+	def on_dccmsg(self, c, e):
+		# non-chat DCC messages are raw bytes; decode as text
+		text = e.arguments[0].decode('utf-8')
+		c.privmsg("You said: " + text)
 
-@client.handler(command='INVITE')
-def handle_invite(client, payload):
-	print 'invite ' + repr(payload.params)
+	def on_dccchat(self, c, e):
+		if len(e.arguments) != 2:
+			return
+		args = e.arguments[1].split()
+		if len(args) == 4:
+			try:
+				address = ip_numstr_to_quad(args[2])
+				port = int(args[3])
+			except ValueError:
+				return
+			self.dcc_connect(address, port)
 
-@client.handler(command='JOIN')
-def handle_join(client, payload):
-	""" Handles joins:
+	#def do_command(self, e, cmd):
+	#nick = e.source.nick
+	#c = self.connection
 
-		payload properties:
-			- nick = 'nick'
-			- host = 'host.name'
-			- user = '~user'
-			- params[0] = '#channel'
-	"""
-	pass
+	#if cmd == "disconnect":
+	#	self.disconnect()
+	#elif cmd == "die":
+	#	self.die()
+	#elif cmd == "stats":
+	#	for chname, chobj in self.channels.items():
+	#		c.notice(nick, "--- Channel statistics ---")
+	#		c.notice(nick, "Channel: " + chname)
+	#		users = sorted(chobj.users())
+	#		c.notice(nick, "Users: " + ", ".join(users))
+	#		opers = sorted(chobj.opers())
+	#		c.notice(nick, "Opers: " + ", ".join(opers))
+	#		voiced = sorted(chobj.voiced())
+	#		c.notice(nick, "Voiced: " + ", ".join(voiced))
+	#elif cmd == "dcc":
+	#	dcc = self.dcc_listen()
+	#	c.ctcp("DCC", nick, "CHAT chat %s %d" % (
+	#		ip_quad_to_numstr(dcc.localaddress),
+	#		dcc.localport))
+	#else:
+	#	c.notice(nick, "Not understood: " + cmd)
 
-@client.handler(command='PART')
-def handle_part(client, payload):
-	print 'part ' + repr(payload.params)
-	print payload.nick
+def main():
+	channel = '#Technocrat'
+	nickname = 'TechBot_'
+	server = 'irc.broke-it.com'
+	port = 6667
 
-@client.handler(command='QUIT')
-def handle_quit(client, payload):
-	""" Handles quit messages from other users
+	bot = TechBot(channel, nickname, server, port)
+	bot.start()
 
-		payload properties:
-			- message: quit message
-	"""
-	print 'quit ' + repr(payload.params)
-
-@client.handler(command='NICK')
-def handle_nick(client, payload):
-	""" Handles own nick change
-
-		payload properties:
-			- nickname: new nick
-	"""
-	print 'nick ' + repr(payload.params)
-
-@client.handler(command='MODE')
-def handle_mode(client, payload):
-	""" Handles mode changes
-
-		Can be mode change of our own nick (2 params)
-		Can be mode change of a channel (3+ params)
-
-		Example:
-			payload.params == ['OurBot', '+ix']
-			payload.params == ['#channel', '+o', 'nickname']
-	"""
-	pass
-
-@client.handler(command='WHOIS')
-def handle_whois(client, payload):
-	print 'whois ' + repr(payload.params)
-
-client.start()
-client.join()
+if __name__ == "__main__":
+	main()

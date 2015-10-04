@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # -*- encoding: utf8 -*-
 
 ########
@@ -22,13 +22,17 @@ atexit.register(cleanup)
 #########
 # start stuff and go into idling
 import time
-import subprocess
+import ircstuff
+import webstuff
+import threading
 
-# start web stuff
-subprocess.Popen(['./webstuff.py'])
+ircThread = threading.Thread(target=ircstuff.main)
+ircThread.setDaemon(True)
+ircThread.start()
 
-# start irc stuff
-subprocess.Popen(['./ircstuff.py'])
+webThread = threading.Thread(target=webstuff.main)
+webThread.setDaemon(True)
+webThread.start()
 
 while True:
 	time.sleep(3600)

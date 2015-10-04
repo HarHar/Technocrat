@@ -66,7 +66,10 @@ def getContent(sid, which):
 
 fapp.debug = True
 fapp.config['SECRET_KEY'] = 'hunter2'
-if __name__ == '__main__':
+
+def main():
 	app = socketio.Middleware(sio, fapp)
 	eventlet.wsgi.server(eventlet.listen(('', 80)), app)
 
+if __name__ == '__main__':
+	main()
