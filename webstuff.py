@@ -11,6 +11,7 @@ import socketio
 import threading
 import time
 import json
+import subprocess
 
 import storage
 import modules
@@ -67,5 +68,5 @@ fapp.debug = True
 fapp.config['SECRET_KEY'] = 'hunter2'
 if __name__ == '__main__':
 	app = socketio.Middleware(sio, fapp)
-	eventlet.wsgi.server(eventlet.listen(('', 8080)), app)
+	eventlet.wsgi.server(eventlet.listen(('', 80)), app)
 
