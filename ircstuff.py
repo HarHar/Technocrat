@@ -7,6 +7,9 @@ import irc.bot
 import irc.strings
 from irc.client import ip_numstr_to_quad, ip_quad_to_numstr
 
+import storage
+import modules
+
 class TechBot(irc.bot.SingleServerIRCBot):
 	# cheat sheet
 	# self.disconnect -> disconnects
