@@ -2,6 +2,7 @@
 # -*- encoding: utf8 -*-
 import sys
 sys.dont_write_bytecode = True
+import traceback
 
 import irc.bot
 import irc.strings
@@ -22,6 +23,28 @@ class TechBot(irc.bot.SingleServerIRCBot):
 	def __init__(self, channel, nickname, server, port=6667):
 		irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, nickname)
 		self.channel = channel
+		self.modules = {}
+		self.printLogs = False
+		for module in modules.ircmodules:
+			modInfo = module.bot.getModule()
+			modInfo['object'].bot = self
+			modInfo['storage'] = storage
+			self.modules[modInfo['name']] = modInfo
+
+	def log(self, msg):
+		if self.printLogs:
+			print(msg)
+
+	def callModules(self, command, params):
+		for module in self.modules:
+			self.log('[call] ' + module + '.' + command + '(' + repr(params) + ')')
+			try:
+				getattr(self.modules[module]['object'], command)(*params)
+			except e:
+				self.log('[call error] on ' + module + '.' + command + '(' + repr(params) + ')')
+				traceback.print_exc()
+			else:
+				self.log('[call return] ' + module + '.' + command + '(' + repr(params) + ')')
 
 	def on_nicknameinuse(self, c, e):
 		c.nick('_' + c.get_nickname() + '_')
@@ -34,6 +57,11 @@ class TechBot(irc.bot.SingleServerIRCBot):
 
 	def on_pubmsg(self, c, e):
 		message = e.arguments[0]
+		source = e.source
+		connection = self.connection
+
+		self.callModules('onMessage', (message, source))
+
 		#a = e.arguments[0].split(":", 1)
 		#if len(a) > 1 and irc.strings.lower(a[0]) == irc.strings.lower(self.connection.get_nickname()):
 		#	self.do_command(e, a[1].strip())
