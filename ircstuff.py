@@ -28,6 +28,7 @@ class TechBot(irc.bot.SingleServerIRCBot):
 		for module in modules.ircmodules:
 			modInfo = module.bot.getModule()
 			modInfo['object'].bot = self
+			modInfo['object'].conn = self.connection
 			modInfo['storage'] = storage
 			self.modules[modInfo['name']] = modInfo
 
@@ -40,7 +41,7 @@ class TechBot(irc.bot.SingleServerIRCBot):
 			self.log('[call] ' + module + '.' + command + '(' + repr(params) + ')')
 			try:
 				getattr(self.modules[module]['object'], command)(*params)
-			except e:
+			except:
 				self.log('[call error] on ' + module + '.' + command + '(' + repr(params) + ')')
 				traceback.print_exc()
 			else:
@@ -58,9 +59,10 @@ class TechBot(irc.bot.SingleServerIRCBot):
 	def on_pubmsg(self, c, e):
 		message = e.arguments[0]
 		source = e.source
+		target = e.target
 		connection = self.connection
 
-		self.callModules('onMessage', (message, source))
+		self.callModules('onMessage', (message, source, target))
 
 		#a = e.arguments[0].split(":", 1)
 		#if len(a) > 1 and irc.strings.lower(a[0]) == irc.strings.lower(self.connection.get_nickname()):
