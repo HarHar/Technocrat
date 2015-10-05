@@ -14,11 +14,13 @@ import ircstuff
 import webstuff
 import threading
 
-ircThread = threading.Thread(target=ircstuff.main)
+link = {'web': {}, 'irc': {}, 'common': {}}
+
+ircThread = threading.Thread(target=ircstuff.main, args=(link,))
 ircThread.setDaemon(True)
 ircThread.start()
 
-webThread = threading.Thread(target=webstuff.main)
+webThread = threading.Thread(target=webstuff.main, args=(link,))
 webThread.setDaemon(True)
 webThread.start()
 
