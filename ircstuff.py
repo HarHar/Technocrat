@@ -23,6 +23,7 @@ class TechBot(irc.bot.SingleServerIRCBot):
 	def __init__(self, link, channel, nickname, server, port=6667):
 		irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, nickname)
 		self.link = link
+		self.link['irc']['bot'] = self
 
 		self.channel = channel
 		self.modules = {}
