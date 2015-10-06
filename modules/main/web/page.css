@@ -5,6 +5,19 @@
   src: local('Raleway'), url(/static/raleway.woff2) format('woff2');
 }
 
+#menuBar {
+	left: 0px;
+	top: 80px;
+	border-right: 5px solid rgb(70, 185, 255);
+	border-top: 5px solid rgb(70, 185, 255);
+	width: 50px;
+	min-height: 300px;
+	border-radius: 3px;
+	position: fixed;
+	background-color: rgb(70, 185, 255);
+	box-shadow: 3px 3px 3px #888888;
+}
+
 #header {
 	text-align: center;
 	position: fixed;
@@ -30,6 +43,7 @@
 	width: 10px;
 	height: 70px;
 	z-index: 0;
+	/*box-shadow: 3px 3px 3px #888888;*/
 }
 
 @-webkit-keyframes headerEffect {
