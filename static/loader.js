@@ -34,6 +34,9 @@ function removejscssfile(filename, filetype){
 // ^ no need for this when our script is the last thing on the page
 
 var socket = io();
+$(window).on('beforeunload', function(){
+    socket.close();
+});
 
 document.loadedJS = '';
 document.loadedCSS = '';
