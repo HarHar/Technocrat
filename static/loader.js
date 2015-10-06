@@ -66,5 +66,8 @@ socket.on('setContent', function(html) {
 	}, 2000);
 });
 
+window.entryPoint = undefined
+window.needEntry = true
+
 socket.emit('getContent', 'main');
 //});
