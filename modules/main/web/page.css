@@ -8,14 +8,51 @@
 #menuBar {
 	left: 0px;
 	top: 80px;
-	border-right: 5px solid rgb(70, 185, 255);
-	border-top: 5px solid rgb(70, 185, 255);
-	width: 50px;
-	min-height: 300px;
-	border-radius: 3px;
+	/*border-right: 3px solid rgb(70, 185, 255);
+	border-top: 3px solid rgb(70, 185, 255);
+	border-bottom: 3px solid rgb(70, 185, 255);*/
 	position: fixed;
+	/*background-color: rgb(70, 185, 255);
+	background-color: #ddd;
+	
+	box-shadow: 3px 3px 3px #888888;*/
+}
+
+.menuItem {
+	padding: 10px;
+	margin-top: 5px;
+	cursor: pointer;
+}
+
+.menuItem:not(.selected):hover {
+	animation: menuItemEffect 1s forwards;
+	-webkit-animation: menuItemEffect 1s forwards;
+	-moz-animation: menuItemEffect 1s forwards;
+}
+
+@keyframes menuItemEffect {
+    0% {background-color: #ddd; }
+    100% { background-color: #C1E8FF }
+}
+
+@-webkit-keyframes menuItemEffect {
+    0% { background-color: #ddd; }
+    100% { background-color: #C1E8FF }
+}
+
+@-moz-keyframes menuItemEffect {
+    0% { background-color: #ddd; }
+    100% { background-color: #C1E8FF }
+}
+
+.menuItem.selected {
 	background-color: rgb(70, 185, 255);
-	box-shadow: 3px 3px 3px #888888;
+}
+
+.menuItem.selected img {
+	-webkit-filter: invert(100%);
+	-moz-filter: invert(100%);
+	filter: invert(100%);
 }
 
 #header {
@@ -33,14 +70,14 @@
 }
 
 #effect {
-	-webkit-animation: 5s ease infinite headerEffect;
+	/*-webkit-animation: 5s ease infinite headerEffect;
 	-moz-animation: 5s ease infinite headerEffect;
-	-animation: 5s ease infinite headerEffect;
+	-animation: 5s ease infinite headerEffect;*/
 	background-color: rgba(70, 185, 255, 1);
 	position: fixed;
 	left: 0;
 	top: 0;
-	width: 10px;
+	width: 0px;
 	height: 70px;
 	z-index: 0;
 	/*box-shadow: 3px 3px 3px #888888;*/
