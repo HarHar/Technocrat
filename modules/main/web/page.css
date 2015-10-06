@@ -22,37 +22,56 @@
 	padding: 10px;
 	margin-top: 5px;
 	cursor: pointer;
+	overflow: hidden;
+	width: 30px;
+	/*height: 26px;*/
+	position: relative;
 }
 
-.menuItem:not(.selected):hover {
+.menuItem:hover {
 	animation: menuItemEffect 1s forwards;
 	-webkit-animation: menuItemEffect 1s forwards;
 	-moz-animation: menuItemEffect 1s forwards;
 }
 
+.menuInfo {
+	position: absolute;
+	right: 50px;
+	top: 10px;
+	color: #DDD;
+	font-weight: bold;
+	white-space: nowrap;
+	font-family: Raleway;
+	font-size: 20px;
+}
+
 @keyframes menuItemEffect {
-    0% {background-color: #ddd; }
-    100% { background-color: #C1E8FF }
+    0% {background-color: #ddd; width: 30px; }
+    100% { background-color: #6FB2FF; width: 200px; }
 }
 
 @-webkit-keyframes menuItemEffect {
-    0% { background-color: #ddd; }
-    100% { background-color: #C1E8FF }
+    0% { background-color: #ddd; width: 30px; }
+    100% { background-color: #6FB2FF; width: 200px; }
 }
 
 @-moz-keyframes menuItemEffect {
-    0% { background-color: #ddd; }
-    100% { background-color: #C1E8FF }
+    0% { background-color: #ddd; width: 30px; }
+    100% { background-color: #6FB2FF; width: 200px; }
 }
 
 .menuItem.selected {
-	background-color: rgb(70, 185, 255);
+	background-color: rgb(70, 185, 255) !important;
 }
 
 .menuItem.selected img {
 	-webkit-filter: invert(100%);
 	-moz-filter: invert(100%);
 	filter: invert(100%);
+}
+
+.menuItem img {
+	/*height: 26px;*/
 }
 
 #header {
