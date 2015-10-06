@@ -36,8 +36,11 @@ class utilities(object):
 		sio.emit('loadJS', self.staticFilePath(filename))
 	def loadCSS(self, sio, filename):
 		sio.emit('loadCSS', self.staticFilePath(filename))
-	def loadHTML(self, sio, filename):
-		sio.emit('setContent', self.readFile(filename))
+	def loadHTML(self, sio, filename, replaces={}):
+		content = self.readFile(filename)
+		for key in replaces:
+			content = content.replace(key, replaces[key])
+		sio.emit('setContent', content)
 globalUtils = utilities()
 
 @fapp.route('/')
