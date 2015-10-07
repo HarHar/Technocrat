@@ -25,6 +25,7 @@ class utilities(object):
 		self.sio = None
 		self.modulePath = ''
 		self.link = {}
+		self.modules = None
 		self.submodule = False
 	def staticFilePath(self, f, aux=False):
 		if f[-3:] in ['css', '.js']:
@@ -132,6 +133,8 @@ def getContent(sid, which):
 			utils.sid = sid
 			utils.modulePath = module.__name__.replace('.', '/') + '/web/'
 			utils.link = globalUtils.link
+			utils.submodule = False
+			utils.modules = modules
 			module.web.provides[which](utils, sio)
 
 @sio.on('callModule')
@@ -147,6 +150,7 @@ def callModule(sid, moduleName, methodName):
 				utils.sid = sid
 				utils.submodule = True
 				utils.modulePath = module.__name__.replace('.', '/') + '/web/'
+				utils.modules = modules
 				utils.link = globalUtils.link
 				module.web.provides[methodName](utils, sio)
 				return
