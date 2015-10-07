@@ -7,10 +7,10 @@ def setMain(utils, client):
 	for module in utils.modules.webmodules:
 		try:
 			for menuItem in module.web.menuItems:
-				mI = module.web.menuItems[menuItem]
-				aux = 'selected' if menuItem == 'home' else ''
+				mI = menuItem
+				aux = 'selected' if mI['id'] == 'home' else ''
 				menuBar += """
-	<div id=\"""" + menuItem + """\" class="menuItem """ + aux + """\" module=\"""" + mI['module'] + """\" method=\"""" + mI['method'] + """\">
+	<div id=\"""" + mI['id'] + """\" class="menuItem """ + aux + """\" module=\"""" + mI['module'] + """\" method=\"""" + mI['method'] + """\">
 		<img src="/static/glyphicons/glyphicons/png/"""+ mI['icon'] + """\" />
 		<div class="menuInfo"> """ + mI['text'] + """ </div>
 	</div>
@@ -26,5 +26,5 @@ def showAbout(utils, client):
 	utils.loadRawHTML(client, 'placeholder')
 
 provides = {'main': setMain, 'showHome': showHome, 'showAbout': showAbout}
-menuItems = {'home': {'icon': 'glyphicons-21-home.png', 'text': 'Home', 'module': 'main', 'method': 'showHome'},
-			'info': {'icon': 'glyphicons-196-circle-info.png', 'text': 'About us', 'module': 'main', 'method': 'showAbout'}}
+menuItems = [{'id': 'home', 'icon': 'glyphicons-21-home.png', 'text': 'Home', 'module': 'main', 'method': 'showHome'},
+			{'id': 'about', 'icon': 'glyphicons-196-circle-info.png', 'text': 'About us', 'module': 'main', 'method': 'showAbout'}]

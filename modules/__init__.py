@@ -1,4 +1,4 @@
 from . import main
 
-webmodules = [main]
-ircmodules = [main]
+webmodules = (main,)
+ircmodules = (main,)
