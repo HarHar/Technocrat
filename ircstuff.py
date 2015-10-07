@@ -24,7 +24,8 @@ class TechBot(irc.bot.SingleServerIRCBot):
 		irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, nickname)
 		self.link = link
 		self.link['irc']['bot'] = self
-		self.connection.password = password
+		self.password = password
+
 
 		self.channel = channel
 		self.modules = {}
@@ -39,6 +40,13 @@ class TechBot(irc.bot.SingleServerIRCBot):
 	def log(self, msg):
 		if self.printLogs:
 			print(msg)
+
+	def on_passwdmismatch(self, *args):
+		print('aaa')
+		if self.password:
+			print('bbb')
+			self.connection.pass_(self.password)
+			print('ccc')
 
 	def callModules(self, command, params):
 		for module in self.modules:
