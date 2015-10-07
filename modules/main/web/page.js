@@ -26,4 +26,6 @@ $('.menuItem').click(function() {
 
 socket.on('setModuleContent', function(html) {
 	$('#realContent').html(html);
-})
+});
+
+socket.emit('callModule', 'main', 'showHome');
