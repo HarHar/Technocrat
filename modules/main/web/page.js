@@ -1,5 +1,24 @@
 var ayy = true;
 
+document.loadedModuleJS = '';
+document.loadedModuleCSS = '';
+
+socket.on('loadModuleCSS', function(url) {
+    if(document.loadedModuleCSS.length > 0) {
+        removejscssfile(document.loadedModuleCSS, 'css');
+    }
+    loadjscssfile(url, 'css');
+    document.loadedModuleCSS = url;
+});
+
+socket.on('loadModuleJS', function(url) {
+    if(document.loadedModuleJS.length > 0) {
+        removejscssfile(document.loadedModuleJS, 'js');
+    }
+    loadjscssfile(url, 'js');
+    document.loadedModuleJS = url;
+});
+
 function toggleHeaderEffect() {
 	if (ayy) {
 		$('#effect').removeClass('reverseCoolAnimation');
