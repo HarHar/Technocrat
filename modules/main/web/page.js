@@ -24,7 +24,6 @@ $('.menuItem').click(function() {
 	socket.emit('callModule', $this.attr('module'), $this.attr('method'));
 });
 
-socket.on('setRealContent', function(html) {
-	$('#effect').removeClass('coolAnimation');
+socket.on('setModuleContent', function(html) {
 	$('#realContent').html(html);
 })

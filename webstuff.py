@@ -24,6 +24,7 @@ class utilities(object):
 		self.sid = None
 		self.sio = None
 		self.modulePath = ''
+		self.submodule = False
 	def staticFilePath(self, f, aux=False):
 		if f[-3:] in ['css', '.js']:
 			URLMod = '_' if aux else ''
@@ -34,14 +35,28 @@ class utilities(object):
 		f.close()
 		return data
 	def loadJS(self, sio, filename, aux=False):
-		sio.emit('loadJS', self.staticFilePath(filename, aux))
+		if self.submodule:
+			sio.emit('loadModuleJS', self.staticFilePath(filename, aux))
+		else:
+			sio.emit('loadJS', self.staticFilePath(filename, aux))
 	def loadCSS(self, sio, filename):
-		sio.emit('loadCSS', self.staticFilePath(filename))
+		if self.submodule:
+			sio.emit('loadModuleCSS', self.staticFilePath(filename))
+		else:
+			sio.emit('loadCSS', self.staticFilePath(filename))
+	def loadRawHTML(self, sio, html):
+		if self.submodule:
+			sio.emit('setModuleContent', html)
+		else:
+			sio.emit('setContent', html)
 	def loadHTML(self, sio, filename, replaces={}):
 		content = self.readFile(filename)
 		for key in replaces:
 			content = content.replace(key, replaces[key])
-		sio.emit('setContent', content)
+		if self.submodule:
+			sio.emit('setModuleContent', content)
+		else:
+			sio.emit('setContent', content)
 	def load(self, sio, html='', css='', js='', replaces={}):
 		if css:
 			self.loadCSS(sio, css)
@@ -60,8 +75,13 @@ class utilities(object):
 					}
 				</script>
 			"""
-			sio.emit('setContent', content)
-			sio.emit('loadJS', self.staticFilePath(js, aux=True))
+
+			if self.submodule:
+				sio.emit('setModuleContent', content)
+				sio.emit('loadModuleJS', self.staticFilePath(js, aux=True))				
+			else:
+				sio.emit('setContent', content)
+				sio.emit('loadJS', self.staticFilePath(js, aux=True))
 		else:
 			if html:
 				self.loadHTML(sio, html, replaces)
@@ -114,7 +134,20 @@ def getContent(sid, which):
 
 @sio.on('callModule')
 def callModule(sid, moduleName, methodName):
-	print(moduleName + '.' + methodName)
+	#print('[call] ' + moduleName + '.' + methodName)
+	for module in modules.webmodules:
+		#print('__name__ == ' + module.__name__)
+		if module.__name__.split('.')[1] == moduleName:
+			#print('provides = ' + repr(module.web.provides))
+			if methodName in module.web.provides:
+				#print('good...')
+				utils = utilities()
+				utils.sid = sid
+				utils.submodule = True
+				utils.modulePath = module.__name__.replace('.', '/') + '/web/'
+				module.web.provides[methodName](utils, sio)
+				return
+	sio.emit('setModuleContent', '<h1><font color="red">Error! Module or function not found</font></h1>')
 
 fapp.debug = True
 fapp.config['SECRET_KEY'] = 'hunter2'
