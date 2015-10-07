@@ -24,6 +24,7 @@ class utilities(object):
 		self.sid = None
 		self.sio = None
 		self.modulePath = ''
+		self.link = {}
 		self.submodule = False
 	def staticFilePath(self, f, aux=False):
 		if f[-3:] in ['css', '.js']:
@@ -130,6 +131,7 @@ def getContent(sid, which):
 			utils = utilities()
 			utils.sid = sid
 			utils.modulePath = module.__name__.replace('.', '/') + '/web/'
+			utils.link = globalUtils.link
 			module.web.provides[which](utils, sio)
 
 @sio.on('callModule')
@@ -145,6 +147,7 @@ def callModule(sid, moduleName, methodName):
 				utils.sid = sid
 				utils.submodule = True
 				utils.modulePath = module.__name__.replace('.', '/') + '/web/'
+				utils.link = globalUtils.link
 				module.web.provides[methodName](utils, sio)
 				return
 	sio.emit('setModuleContent', '<h1><font color="red">Error! Module or function not found</font></h1>')
@@ -156,6 +159,7 @@ def main(link):
 	app = socketio.Middleware(sio, fapp)
 	fapp.link = link
 	app.link = link
+	globalUtils.link = link
 	eventlet.wsgi.server(eventlet.listen(('', 80)), app)
 
 if __name__ == '__main__':

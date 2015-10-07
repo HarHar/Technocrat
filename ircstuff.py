@@ -117,10 +117,12 @@ class TechBot(irc.bot.SingleServerIRCBot):
 
 def main(link):
 	channel = '#Technocrat'
+	mainChannel = '#/g/technology'
 	nickname = 'TechBot_'
 	server = 'irc.broke-it.com'
 	port = 6667
 
+	link['mainChannel'] = mainChannel
 	bot = TechBot(link, channel, nickname, server, port)
 	bot.start()
 

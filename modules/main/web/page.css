@@ -13,6 +13,9 @@
 	min-width: 100px;
 	min-height: 100px;
 	color: black;
+	font-family: Raleway;
+	font-size: 18px;
+	font-weight: bold;
 }
 
 #menuBar {
