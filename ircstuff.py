@@ -42,11 +42,8 @@ class TechBot(irc.bot.SingleServerIRCBot):
 			print(msg)
 
 	def on_passwdmismatch(self, *args):
-		print('aaa')
 		if self.password:
-			print('bbb')
 			self.connection.pass_(self.password)
-			print('ccc')
 
 	def callModules(self, command, params):
 		for module in self.modules:
