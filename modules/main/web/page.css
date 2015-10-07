@@ -5,6 +5,15 @@
   src: local('Raleway'), url(/static/raleway.woff2) format('woff2');
 }
 
+#realContent {
+	position: fixed;
+	overflow: auto;
+	top: 70px;
+	left: 80px;
+	min-width: 100px;
+	min-height: 100px;
+}
+
 #menuBar {
 	left: 0px;
 	top: 80px;
@@ -16,6 +25,7 @@
 	background-color: #ddd;
 	
 	box-shadow: 3px 3px 3px #888888;*/
+	z-index: 5;
 }
 
 .menuItem {
@@ -26,6 +36,7 @@
 	width: 30px;
 	/*height: 26px;*/
 	position: relative;
+	z-index: 5;
 }
 
 .menuItem:hover {
@@ -36,28 +47,29 @@
 
 .menuInfo {
 	position: absolute;
-	right: 50px;
+	left: 50px;
 	top: 10px;
 	color: #DDD;
 	font-weight: bold;
 	white-space: nowrap;
 	font-family: Raleway;
 	font-size: 20px;
+	z-index: 6;
 }
 
 @keyframes menuItemEffect {
     0% {background-color: #ddd; width: 30px; }
-    100% { background-color: #6FB2FF; width: 200px; }
+    100% { background-color: #6FB2FF; width: 170px; }
 }
 
 @-webkit-keyframes menuItemEffect {
     0% { background-color: #ddd; width: 30px; }
-    100% { background-color: #6FB2FF; width: 200px; }
+    100% { background-color: #6FB2FF; width: 170px; }
 }
 
 @-moz-keyframes menuItemEffect {
     0% { background-color: #ddd; width: 30px; }
-    100% { background-color: #6FB2FF; width: 200px; }
+    100% { background-color: #6FB2FF; width: 170px; }
 }
 
 .menuItem.selected {
@@ -102,21 +114,45 @@
 	/*box-shadow: 3px 3px 3px #888888;*/
 }
 
+.coolAnimation {
+	-webkit-animation: 2s ease headerEffect forwards;
+	-moz-animation: 2s ease headerEffect forwards;
+	-animation: 2s ease headerEffect forwards;
+}
+
+.reverseCoolAnimation {
+	-webkit-animation: 2s ease revHeaderEffect forwards;
+	-moz-animation: 2s ease revHeaderEffect forwards;
+	-animation: 2s ease revHeaderEffect forwards;
+}
+
 @-webkit-keyframes headerEffect {
     0% { left: 0; width: 0%; }
-    50% { left: 0; width: 100%; }
-    100% { left: 100%; width: 0%; }
+    100% { left: 0; width: 100%; }
 }
 
 @-moz-keyframes headerEffect {
     0% { left: 0; width: 0%; }
-    50% { left: 0; width: 100%; }
-    100% { left: 100%; width: 0%; }
+    100% { left: 0; width: 100%; }
 }
 
 @keyframes headerEffect {
     0% { left: 0; width: 0%; }
-    50% { left: 0; width: 100%; }
+    100% { left: 0; width: 100%; }
+}
+
+@-webkit-keyframes revHeaderEffect {
+    0% { left: 0; width: 100%; }
+    100% { left: 100%; width: 0%; }
+}
+
+@-moz-keyframes revHeaderEffect {
+    0% { left: 0; width: 100%; }
+    100% { left: 100%; width: 0%; }
+}
+
+@keyframes revHeaderEffect {
+    0% { left: 0; width: 100%; }
     100% { left: 100%; width: 0%; }
 }
 
