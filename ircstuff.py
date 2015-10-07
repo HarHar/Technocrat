@@ -63,7 +63,8 @@ class TechBot(irc.bot.SingleServerIRCBot):
 		c.join(self.channel)
 
 	def on_privmsg(self, c, e):
-		self.do_command(e, e.arguments[0])
+		pass
+		#self.do_command(e, e.arguments[0])
 
 	def on_pubmsg(self, c, e):
 		message = e.arguments[0]
@@ -130,7 +131,7 @@ def main(link):
 	password = storage.db.data['ircpassword']
 
 	link['mainChannel'] = mainChannel
-	bot = TechBot(link, channel, nickname, server, port=port, password=password)
+	bot = TechBot(link, mainChannel, nickname, server, port=port, password=password)
 	bot.start()
 
 if __name__ == "__main__":
