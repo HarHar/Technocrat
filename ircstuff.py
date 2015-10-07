@@ -20,10 +20,11 @@ class TechBot(irc.bot.SingleServerIRCBot):
 	# c.notice(nick, msg)
 	# self.channels -> list of channel objects
 
-	def __init__(self, link, channel, nickname, server, port=6667):
+	def __init__(self, link, channel, nickname, server, password='', port=6667):
 		irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, nickname)
 		self.link = link
 		self.link['irc']['bot'] = self
+		self.password = password
 
 		self.channel = channel
 		self.modules = {}
@@ -116,14 +117,15 @@ class TechBot(irc.bot.SingleServerIRCBot):
 	#	c.notice(nick, "Not understood: " + cmd)
 
 def main(link):
-	channel = '#Technocrat'
-	mainChannel = '#/g/technology'
-	nickname = 'TechBot_'
-	server = 'irc.broke-it.com'
-	port = 6667
+	channel = storage.db.data['ircbotchannel']
+	mainChannel = storage.db.data['ircchannel']
+	nickname = storage.db.data['ircnick']
+	server = storage.db.data['irchost']
+	port = storage.db.data['ircport']
+	password = storage.db.data['ircpassword']
 
 	link['mainChannel'] = mainChannel
-	bot = TechBot(link, channel, nickname, server, port)
+	bot = TechBot(link, channel, nickname, server, port=port, password=password)
 	bot.start()
 
 if __name__ == "__main__":

@@ -7,6 +7,15 @@ import sys
 sys.dont_write_bytecode = True
 ########
 
+########
+# check for first time user
+import storage
+if len(storage.db.data) == 0:
+	print('Systems not configured!')
+	print('Please use ./config.py')
+	exit(1)
+########
+
 #########
 # start stuff and go into idling
 import time

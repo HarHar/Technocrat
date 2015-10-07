@@ -164,7 +164,7 @@ def main(link):
 	fapp.link = link
 	app.link = link
 	globalUtils.link = link
-	eventlet.wsgi.server(eventlet.listen(('', 80)), app)
+	eventlet.wsgi.server(eventlet.listen(('', storage.db.data['webport'])), app)
 
 if __name__ == '__main__':
 	exit()

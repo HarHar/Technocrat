@@ -11,7 +11,7 @@ def setMain(utils, client):
 				aux = 'selected' if mI['id'] == 'home' else ''
 				menuBar += """
 	<div id=\"""" + mI['id'] + """\" class="menuItem """ + aux + """\" module=\"""" + mI['module'] + """\" method=\"""" + mI['method'] + """\">
-		<img src="/static/glyphicons/glyphicons/png/"""+ mI['icon'] + """\" />
+		<img src="/static/glyphicons/glyphicons/png/""" + mI['icon'] + """\" />
 		<div class="menuInfo"> """ + mI['text'] + """ </div>
 	</div>
 				"""
