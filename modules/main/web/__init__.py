@@ -20,9 +20,6 @@ def setMain(utils, client):
 	utils.load(client, css='page.css', html='page.html', js='page.js', replaces={'$title': utils.link['mainChannel'], '$menuBar': menuBar})
 
 def showHome(utils, client):
-	history = """In early 2012 one of the current owners, dissatisfied with the /g/ channels that existed, sought to create a different one. One that was actually about technology. He posted on /g/ about his desire to create a new channel, and invited others to join him. He then invited his friends from former software projects and #/g/technology was born.
-The channel has grown a lot since then, and is now considered the de-facto /g/ channel and is by far the largest channel for 4chan's technology board. """
-
 	chan = utils.link['irc']['bot'].channels[utils.link['mainChannel']]
 
 	users = chan.users()
@@ -33,12 +30,19 @@ The channel has grown a lot since then, and is now considered the de-facto /g/ c
 
 	out = 'We currently have <span class="bigger green">' + str(usersNumber) + '</span> online users<br />'
 	out += '<div style="float: left; width: 200px; padding: 20px; border: 1px solid #AE0000; margin: 10px;">Our currently online mods are: ' + opers + '</div>'
-	out += '<div style="float: left; width: 200px; padding: 20px; border: 1px solid #9E7B00; margin: 10px;">Our most steemed online members are: ' + voices + '<br />'
+	out += '<div style="float: left; width: 200px; padding: 20px; border: 1px solid #9E7B00; margin: 10px;">Our most esteemed online members are: ' + voices + '<br />'
 
 	utils.loadRawHTML(client, out)
 
 def showAbout(utils, client):
-	utils.loadRawHTML(client, 'placeholder')
+	history = """In early 2012 one of the current owners, dissatisfied with the /g/ channels that existed, sought to create a different one. One that was actually about technology. He posted on /g/ about his desire to create a new channel, and invited others to join him. He then invited his friends from former software projects and #/g/technology was born.
+<br />The channel has grown a lot since then, and was considered the de-facto /g/ channel and was by far the largest channel for 4chan's technology board, <span style="color: #F00">but</span> recently we have decided to cut our ties with 4chan, leaving that dark past behind and moving forward with our own community, which is made of people from all around the web."""
+
+	out = 'Now here\'s the story of our channel:<br /><br />'
+	out += history
+	out += '<br /><br />'
+	out += '<span class="bigger green">&gt;4chan<br/>&gt;2015</span>'
+	utils.loadRawHTML(client, out)
 
 provides = {'main': setMain, 'showHome': showHome, 'showAbout': showAbout}
 menuItems = [{'id': 'home', 'icon': 'glyphicons-21-home.png', 'text': 'Home', 'module': 'main', 'method': 'showHome'},
