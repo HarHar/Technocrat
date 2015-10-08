@@ -13,7 +13,6 @@ import time
 import json
 import subprocess
 
-import storage
 import modules
 
 fapp = Flask(__name__)
@@ -138,7 +137,7 @@ def getContent(sid, which):
 			module.web.provides[which](utils, sio)
 
 @sio.on('callModule')
-def callModule(sid, moduleName, methodName):
+def callModule(sid, moduleName, methodName, *args):
 	#print('[call] ' + moduleName + '.' + methodName)
 	for module in modules.webmodules:
 		#print('__name__ == ' + module.__name__)
@@ -152,7 +151,7 @@ def callModule(sid, moduleName, methodName):
 				utils.modulePath = module.__name__.replace('.', '/') + '/web/'
 				utils.modules = modules
 				utils.link = globalUtils.link
-				module.web.provides[methodName](utils, sio)
+				module.web.provides[methodName](utils, sio, *args)
 				return
 	sio.emit('setModuleContent', '<h1><font color="red">Error! Module or function not found</font></h1>')
 
@@ -177,7 +176,7 @@ def main(link):
 	link['broadcast'] = []
 	eventlet.greenthread.spawn(broadcastQueue, (link['broadcast'], sio))
 
-	eventlet.wsgi.server(eventlet.listen(('', storage.db.data['webport'])), app)
+	eventlet.wsgi.server(eventlet.listen(('', link['storage'].db.data['webport'])), app)
 
 if __name__ == '__main__':
 	exit()

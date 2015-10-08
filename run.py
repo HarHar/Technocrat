@@ -23,7 +23,7 @@ import ircstuff
 import webstuff
 import threading
 
-link = {'web': {}, 'irc': {}, 'common': {}}
+link = {'web': {}, 'irc': {}, 'common': {}, 'storage': storage}
 
 ircThread = threading.Thread(target=ircstuff.main, args=(link,))
 ircThread.setDaemon(True)

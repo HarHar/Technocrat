@@ -8,7 +8,6 @@ import irc.bot
 import irc.strings
 from irc.client import ip_numstr_to_quad, ip_quad_to_numstr
 
-import storage
 import modules
 
 class TechBot(irc.bot.SingleServerIRCBot):
@@ -23,6 +22,7 @@ class TechBot(irc.bot.SingleServerIRCBot):
 	def __init__(self, link, channel, nickname, server, password='', port=6667):
 		irc.bot.SingleServerIRCBot.__init__(self, [(server, port)], nickname, nickname)
 		self.link = link
+		storage = link['storage']
 		self.link['irc']['bot'] = self
 		self.password = password
 
@@ -130,6 +130,7 @@ class TechBot(irc.bot.SingleServerIRCBot):
 	#	c.notice(nick, "Not understood: " + cmd)
 
 def main(link):
+	storage = link['storage']
 	channel = storage.db.data['ircbotchannel']
 	mainChannel = storage.db.data['ircchannel']
 	nickname = storage.db.data['ircnick']
