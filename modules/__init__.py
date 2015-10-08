@@ -1,4 +1,5 @@
 from . import main
+from . import peek
 
-webmodules = (main,)
-ircmodules = (main,)
+webmodules = (main, peek,)
+ircmodules = (main, peek,)
