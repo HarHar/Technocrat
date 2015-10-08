@@ -8,7 +8,7 @@ def showPeek(utils, client):
 
 	out = '<div id="peekChat">'
 	out += '<span class="bigger blue">Last 10 lines from our channel:</span><br />'
-	out += '<span class="green" style="font-size: 14px;">You can join us by pointing your IRC client to #/g/technology@irc.rizon.net</span>'
+	out += '<span class="green" style="font-size: 14px;">You can join us by pointing your IRC client to #/g/technology@irc.rizon.net or clicking <a href="https://qchat.rizon.net/?randomnick=1&channels=/g/technology&uio=d4" target="_BLANK">here</a></span>'
 	out += '<br /> <br />'
 	for logItem in log[-10:]:
 		if logItem['target'] == utils.link['mainChannel']:

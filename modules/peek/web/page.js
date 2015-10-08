@@ -1,6 +1,6 @@
 if(typeof window.logMessageHooked === "undefined") {
+	window.logMessageHooked = true;
 	socket.on('logMessage', function(logm) {
-		window.logMessageHooked = true;
 		$('#peekChat').html($('#peekChat').html() + logm);
 
 		if($('chatItem').length > 10) {
