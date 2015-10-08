@@ -35,6 +35,7 @@ class TechBot(irc.bot.SingleServerIRCBot):
 			modInfo['object'].conn = self.connection
 			modInfo['storage'] = storage
 			self.modules[modInfo['name']] = modInfo
+		self.lastSpoke = []
 
 	def log(self, msg):
 		if self.printLogs:
@@ -71,6 +72,12 @@ class TechBot(irc.bot.SingleServerIRCBot):
 		source = e.source
 		target = e.target
 		connection = self.connection
+
+		if source.split('!')[0] in self.lastSpoke:
+			self.lastSpoke.remove(source.split('!')[0])
+		self.lastSpoke.append(source.split('!')[0])
+		if len(self.lastSpoke) > 10:
+			self.lastSpoke = self.lastSpoke[1:]
 
 		self.callModules('onMessage', (message, source, target))
 

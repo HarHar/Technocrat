@@ -27,16 +27,18 @@ def showHome(utils, client):
 	mods = sorted(list(chan.owners())) + sorted(list(chan.opers())) + sorted(list(chan.halfops()))
 	opers = '<br />'.join([('<span style="color: #AE0000; margin-left: 50px;">' + x + '</span>') for x in mods])
 	voices = '<br />'.join([('<span style="color: #9E7B00; margin-left: 50px;">' + x + '</span>') for x in sorted(list(chan.voiced()))])
+	lastSpoke = '<br />'.join([('<span style="color: #75507B; margin-left: 50px;">' + x + '</span>') for x in utils.link['irc']['bot'].lastSpoke][::-1])
 
 	out = 'We currently have <span class="bigger green">' + str(usersNumber) + '</span> online users<br />'
 	out += '<div style="float: left; width: 200px; padding: 20px; border: 1px solid #9E7B00; margin: 10px;">Our most esteemed online members are: ' + voices + '</div>'
 	out += '<div style="float: left; width: 200px; padding: 20px; border: 1px solid #AE0000; margin: 10px;">Our currently online mods are: ' + opers + '</div>'
+	out += '<div style="float: left; width: 200px; padding: 20px; border: 1px solid #75507B; margin: 10px;">Last 10 users that spoke: <br />' + lastSpoke + '</div>'
 
 	rules = ['No ponies, fur, pepe or shitposting', 'Keep the discussions civil, this isn\'t a brothel.', 'All bots are dissallowed from #/g/technology unless explicitly defined by Zanthas, this is to disallow spam and confusion between bots.', 'Rules and punishment are at the discretion of the moderation Team (HOP and higher)']
 	fRules = ''.join([('<span style="color: #FFF">#' + str(i+1) + '</span> ' + x + '<br /><br />') for i, x in enumerate(rules)])
 
-	out += '<br /><br />Now for our rules:'
-	out += '<div style="width: 500px; padding: 20px; background-color: #AE0000; margin: 10px; color: #DDD; font-weight: bold; font-size: 24px;">' + fRules + '</div>'
+	out += '<br /><br />'
+	out += '<div style="float: left; width: 500px; padding: 20px; background-color: #AE0000; margin: 10px; color: #DDD; font-weight: bold; font-size: 24px;">Now for our rules: <br />' + fRules + '</div>'
 
 	utils.loadRawHTML(client, out)
 
