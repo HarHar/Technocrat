@@ -14,7 +14,7 @@
 }
 
 #realContent {
-	position: fixed;
+	position: absolute;
 	overflow-y: auto;
 	top: 90px;
 	left: 80px;
