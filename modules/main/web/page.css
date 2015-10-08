@@ -110,6 +110,8 @@
 	font-size: 42px;
 	padding: 10px;
 	color: #DDD;
+	z-index: 2;
+	background-color: #DDD;
 }
 
 #effect {
