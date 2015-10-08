@@ -38,27 +38,27 @@ class utilities(object):
 		return data
 	def loadJS(self, sio, filename, aux=False):
 		if self.submodule:
-			sio.emit('loadModuleJS', self.staticFilePath(filename, aux))
+			sio.emit('loadModuleJS', self.staticFilePath(filename, aux), room=self.sid)
 		else:
-			sio.emit('loadJS', self.staticFilePath(filename, aux))
+			sio.emit('loadJS', self.staticFilePath(filename, aux), room=self.sid)
 	def loadCSS(self, sio, filename):
 		if self.submodule:
-			sio.emit('loadModuleCSS', self.staticFilePath(filename))
+			sio.emit('loadModuleCSS', self.staticFilePath(filename), room=self.sid)
 		else:
-			sio.emit('loadCSS', self.staticFilePath(filename))
+			sio.emit('loadCSS', self.staticFilePath(filename), room=self.sid)
 	def loadRawHTML(self, sio, html):
 		if self.submodule:
-			sio.emit('setModuleContent', html)
+			sio.emit('setModuleContent', html, room=self.sid)
 		else:
-			sio.emit('setContent', html)
+			sio.emit('setContent', html, room=self.sid)
 	def loadHTML(self, sio, filename, replaces={}):
 		content = self.readFile(filename)
 		for key in replaces:
 			content = content.replace(key, replaces[key])
 		if self.submodule:
-			sio.emit('setModuleContent', content)
+			sio.emit('setModuleContent', content, room=self.sid)
 		else:
-			sio.emit('setContent', content)
+			sio.emit('setContent', content, room=self.sid)
 	def load(self, sio, html='', css='', js='', replaces={}):
 		if css:
 			self.loadCSS(sio, css)
@@ -79,11 +79,11 @@ class utilities(object):
 			"""
 
 			if self.submodule:
-				sio.emit('setModuleContent', content)
-				sio.emit('loadModuleJS', self.staticFilePath(js, aux=True))				
+				sio.emit('setModuleContent', content, room=self.sid)
+				sio.emit('loadModuleJS', self.staticFilePath(js, aux=True), room=self.sid)
 			else:
-				sio.emit('setContent', content)
-				sio.emit('loadJS', self.staticFilePath(js, aux=True))
+				sio.emit('setContent', content, room=self.sid)
+				sio.emit('loadJS', self.staticFilePath(js, aux=True), room=self.sid)
 		else:
 			if html:
 				self.loadHTML(sio, html, replaces)
