@@ -5,6 +5,20 @@
   src: local('Raleway'), url(/static/raleway.woff2) format('woff2');
 }
 
+input {
+	padding: 10px;
+	border-width: 0px;
+	margin-bottom: 5px;
+}
+
+#mascot {
+	position: fixed;
+	bottom: 0px;
+	right: 10px;
+	max-width: 200px;
+	cursor: pointer;
+}
+
 #statusBar {
 	position: fixed;
 	right: 0;
@@ -24,6 +38,7 @@
 	font-family: Raleway;
 	font-size: 18px;
 	font-weight: bold;
+	margin-right: 200px;
 }
 
 #menuBar {
