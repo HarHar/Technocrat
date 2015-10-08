@@ -5,6 +5,14 @@
   src: local('Raleway'), url(/static/raleway.woff2) format('woff2');
 }
 
+#statusBar {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	color: #000;
+	padding: 3px;
+}
+
 #realContent {
 	position: fixed;
 	overflow: auto;
@@ -116,6 +124,18 @@
 	height: 70px;
 	z-index: 0;
 	/*box-shadow: 3px 3px 3px #888888;*/
+}
+
+.blue {
+	color: rgba(70, 185, 255, 1);
+}
+
+.green {
+	color: #4E9A06;
+}
+
+.bigger {
+	font-size: 26px;
 }
 
 .coolAnimation {

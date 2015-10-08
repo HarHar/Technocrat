@@ -26,7 +26,6 @@ class TechBot(irc.bot.SingleServerIRCBot):
 		self.link['irc']['bot'] = self
 		self.password = password
 
-
 		self.channel = channel
 		self.modules = {}
 		self.printLogs = False
@@ -60,6 +59,7 @@ class TechBot(irc.bot.SingleServerIRCBot):
 		c.nick('_' + c.get_nickname() + '_')
 
 	def on_welcome(self, c, e):
+		print('[irc] connected')
 		c.join(self.channel)
 
 	def on_privmsg(self, c, e):
