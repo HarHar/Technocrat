@@ -43,6 +43,25 @@ $('.menuItem').click(function() {
 	socket.emit('callModule', $this.attr('module'), $this.attr('method'));
 });
 
+var changingMascot;
+
+$('#mascot').click(function() {
+	if (!changingMascot) {
+		changingMascot = true;
+		$('#mascot').css('opacity', '0.3');
+		socket.emit('callModule', 'main', 'getNewMascot');
+	}
+});
+
+$('#mascot').load(function() {
+	changingMascot = false;
+    $('#mascot').css('opacity', '1');
+});
+
+socket.on('setMascot', function(url) {
+	$('#mascot').attr('src', url);
+});
+
 socket.on('setModuleContent', function(html) {
 	$('#realContent').html(html);
 });
