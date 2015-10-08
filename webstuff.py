@@ -159,11 +159,24 @@ def callModule(sid, moduleName, methodName):
 fapp.debug = True
 fapp.config['SECRET_KEY'] = 'hunter2'
 
+def broadcastQueue(x):
+	q, sio = x
+	while True:
+		eventlet.greenthread.sleep(1)
+		for event in q:
+			sio.emit(event[0], *event[1])
+			q.remove(event)
+
 def main(link):
 	app = socketio.Middleware(sio, fapp)
 	fapp.link = link
 	app.link = link
 	globalUtils.link = link
+	link['web']['sio'] = sio
+
+	link['broadcast'] = []
+	eventlet.greenthread.spawn(broadcastQueue, (link['broadcast'], sio))
+
 	eventlet.wsgi.server(eventlet.listen(('', storage.db.data['webport'])), app)
 
 if __name__ == '__main__':
