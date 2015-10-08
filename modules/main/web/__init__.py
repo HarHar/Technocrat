@@ -36,9 +36,9 @@ def showHome(utils, client):
 
 def showAbout(utils, client):
 	history = """In early 2012 one of the current owners, dissatisfied with the /g/ channels that existed, sought to create a different one. One that was actually about technology. He posted on /g/ about his desire to create a new channel, and invited others to join him. He then invited his friends from former software projects and #/g/technology was born.
-<br />The channel has grown a lot since then, and was considered the de-facto /g/ channel and was by far the largest channel for 4chan's technology board, <span style="color: #F00">but</span> recently we have decided to cut our ties with 4chan, leaving that dark past behind and moving forward with our own community, which is made of people from all around the web."""
+<br />The channel has grown a lot since then, it was considered the de-facto /g/ channel and was by far the largest channel for 4chan's technology board, but recently we have become more than just a 4chan related channel, and have embraced people from across the web. <br /> <span style="color: #AE0000">We hope to continue this growth so that we can become the defacto irc channel for all technology related discussion.</span>"""
 
-	out = 'Now here\'s the story of our channel:<br /><br />'
+	out = 'Our IRC channel, <span class="blue">#/g/technology</span>, currently lives on <span class="blue">Rizon</span> (irc.rizon.net:6667).<br />Now here\'s the story of our channel:<br /><br />'
 	out += history
 	out += '<br /><br />'
 	out += '<span class="bigger green">&gt;4chan<br/>&gt;2015</span>'
