@@ -32,6 +32,12 @@ def showHome(utils, client):
 	out += '<div style="float: left; width: 200px; padding: 20px; border: 1px solid #9E7B00; margin: 10px;">Our most esteemed online members are: ' + voices + '</div>'
 	out += '<div style="float: left; width: 200px; padding: 20px; border: 1px solid #AE0000; margin: 10px;">Our currently online mods are: ' + opers + '</div>'
 
+	rules = ['No ponies, fur, pepe or shitposting', 'Keep the discussions civil, this isn\'t a brothel.', 'All bots are dissallowed from #/g/technology unless explicitly defined by Zanthas, this is to disallow spam and confusion between bots.', 'Rules and punishment are at the discretion of the moderation Team (HOP and higher)']
+	fRules = ''.join([('<span style="color: #FFF">#' + str(i+1) + '</span> ' + x + '<br /><br />') for i, x in enumerate(rules)])
+
+	out += '<br /><br />Now for our rules:'
+	out += '<div style="width: 500px; padding: 20px; background-color: #AE0000; margin: 10px; color: #DDD; font-weight: bold; font-size: 24px;">' + fRules + '</div>'
+
 	utils.loadRawHTML(client, out)
 
 def showAbout(utils, client):
