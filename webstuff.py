@@ -163,7 +163,10 @@ def broadcastQueue(x):
 	while True:
 		eventlet.greenthread.sleep(1)
 		for event in q:
-			sio.emit(event[0], *event[1])
+			if len(event) == 2:
+				sio.emit(event[0], *event[1])
+			elif len(event) == 3:
+				sio.emit(event[0], event[1], room=event[2])
 			q.remove(event)
 
 def main(link):
@@ -172,6 +175,10 @@ def main(link):
 	app.link = link
 	globalUtils.link = link
 	link['web']['sio'] = sio
+
+	link['common']['registrationQ'] = {}
+	link['common']['registrationQ2'] = {}
+	link['common']['loggedUsers'] = {}
 
 	link['broadcast'] = []
 	eventlet.greenthread.spawn(broadcastQueue, (link['broadcast'], sio))
