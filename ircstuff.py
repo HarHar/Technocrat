@@ -25,6 +25,7 @@ class TechBot(irc.bot.SingleServerIRCBot):
 		storage = link['storage']
 		self.link['irc']['bot'] = self
 		self.password = password
+		self.nickname = nickname
 
 		self.channel = channel
 		self.modules = {}
@@ -48,15 +49,14 @@ class TechBot(irc.bot.SingleServerIRCBot):
 	def callModules(self, command, params):
 		for module in self.modules:
 			self.log('[call] ' + module + '.' + command + '(' + repr(params) + ')')
-			try:
-				getattr(self.modules[module]['object'], command)(*params)
-			except AttributeError:
-				pass
-			except:
-				self.log('[call error] on ' + module + '.' + command + '(' + repr(params) + ')')
-				traceback.print_exc()
-			else:
-				self.log('[call return] ' + module + '.' + command + '(' + repr(params) + ')')
+			if hasattr(self.modules[module]['object'], command):
+				try:
+					getattr(self.modules[module]['object'], command)(*params)
+				except:
+					self.log('[call error] on ' + module + '.' + command + '(' + repr(params) + ')')
+					traceback.print_exc()
+				else:
+					self.log('[call return] ' + module + '.' + command + '(' + repr(params) + ')')
 
 	def on_nicknameinuse(self, c, e):
 		c.nick('_' + c.get_nickname() + '_')
@@ -68,9 +68,14 @@ class TechBot(irc.bot.SingleServerIRCBot):
 	def on_privmsg(self, c, e):
 		message = e.arguments[0]
 		source = e.source
-		connection = self.connection
 
 		self.callModules('onPrivMessage', (message, source))
+
+	def on_privnotice(self, c, e):
+		message = e.arguments[0]
+		source = e.source
+
+		self.callModules('onPrivNotice', (message, source))
 
 	def on_pubmsg(self, c, e):
 		message = e.arguments[0]
