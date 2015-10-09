@@ -1,6 +1,7 @@
 from . import main
 from . import peek
 from . import report
+from . import access
 
-webmodules = (main, peek, report,)
-ircmodules = (main, peek, report,)
+webmodules = (main, access, peek, report,)
+ircmodules = (main, access, peek, report,)
