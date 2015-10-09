@@ -50,6 +50,8 @@ class TechBot(irc.bot.SingleServerIRCBot):
 			self.log('[call] ' + module + '.' + command + '(' + repr(params) + ')')
 			try:
 				getattr(self.modules[module]['object'], command)(*params)
+			except AttributeError:
+				pass
 			except:
 				self.log('[call error] on ' + module + '.' + command + '(' + repr(params) + ')')
 				traceback.print_exc()
@@ -64,8 +66,11 @@ class TechBot(irc.bot.SingleServerIRCBot):
 		c.join(self.channel)
 
 	def on_privmsg(self, c, e):
-		pass
-		#self.do_command(e, e.arguments[0])
+		message = e.arguments[0]
+		source = e.source
+		connection = self.connection
+
+		self.callModules('onPrivMessage', (message, source))
 
 	def on_pubmsg(self, c, e):
 		message = e.arguments[0]
