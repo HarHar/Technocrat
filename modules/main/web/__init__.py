@@ -42,7 +42,7 @@ def showHome(utils, client):
 	fRules = ''.join([('<span style="color: #FFF">#' + str(i+1) + '</span> ' + x + '<br /><br />') for i, x in enumerate(rules)])
 
 	out += '<br /><br />'
-	out += '<div style="float: left; width: 500px; padding: 20px; background-color: #AE0000; margin: 10px; color: #DDD; font-weight: bold; font-size: 24px;">Now for our rules: <br />' + fRules + '</div>'
+	out += '<div style="float: left; min-width: 200px; max-width: 500px; padding: 20px; background-color: #AE0000; margin: 10px; color: #DDD; font-weight: bold; font-size: 24px;">Now for our rules: <br />' + fRules + '</div>'
 
 	utils.loadRawHTML(client, out)
 
