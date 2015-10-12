@@ -9,6 +9,8 @@ class BotModule(object):
 	def onMessage(self, message, source, target):
 		if self.bot.link['irc'].get('log', None) is None:
 			self.bot.link['irc']['log'] = []
+		if target != self.bot.link['mainChannel']:
+			return
 		self.bot.link['irc']['log'].append({'type': 'message', 'target': target, 'source': source, 'message': message})
 
 		if target != self.bot.link['mainChannel']: return
