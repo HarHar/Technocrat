@@ -8,7 +8,7 @@ class BotModule(object):
 
 		self.notAuthd = '<span class="bigger" style="color: #AE0000">Error! That nick is not authenticated on NickServ!</span>'
 
-		self.ok = '<span class="bigger green">Success! You are now logged in $nick'
+		self.ok = '<span class="bigger green">Success! You are now logged in $nick</span>'
 	def onPrivNotice(self, message, source):
 		link = self.bot.link
 		if link['common'].get('registrationQ2', None) is None:
