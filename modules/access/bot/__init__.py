@@ -22,7 +22,7 @@ class BotModule(object):
 					self.currentNick = user
 					return
 
-				if message.lower().find('nick ' + user.lower() + ' isn\'t registered') == 0:
+				if message.lower().find('nick \x02' + user.lower() + '\x02 isn\'t registered') == 0:
 					link['broadcast'].append(['setModuleContent', self.notRegd, link['common']['registrationQ'].pop(user)])
 					self.currentNick = None
 					return
