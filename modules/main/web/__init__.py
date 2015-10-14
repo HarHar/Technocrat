@@ -33,7 +33,7 @@ def showHome(utils, client):
 	voices = '<br />'.join([('<span style="color: #9E7B00; margin-left: 50px;">' + x + '</span>') for x in sorted(list(chan.voiced()))])
 	lastSpoke = '<br />'.join([('<span style="color: #75507B; margin-left: 50px;">' + x + '</span>') for x in utils.link['irc']['bot'].lastSpoke][::-1])
 
-	out = 'We currently have <span class="bigger green">' + str(usersNumber) + '</span> online users<br />'
+	out = 'Welcome, technocrat, to our tiny piece of the web! We currently have <span class="bigger green">' + str(usersNumber) + '</span> online users<br />'
 	out += '<div style="float: left; width: 200px; padding: 20px; border: 1px solid #9E7B00; margin: 10px;">Our most esteemed online members are: ' + voices + '</div>'
 	out += '<div style="float: left; width: 200px; padding: 20px; border: 1px solid #AE0000; margin: 10px;">Our currently online mods are: ' + opers + '</div>'
 	out += '<div style="float: left; width: 200px; padding: 20px; border: 1px solid #75507B; margin: 10px;">Last 10 users that spoke: <br />' + lastSpoke + '</div>'
