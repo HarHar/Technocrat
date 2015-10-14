@@ -46,12 +46,13 @@ input {
 	/*border-right: 3px solid rgb(70, 185, 255);
 	border-top: 3px solid rgb(70, 185, 255);
 	border-bottom: 3px solid rgb(70, 185, 255);*/
-	position: fixed;
+	position: absolute;
 	/*background-color: rgb(70, 185, 255);
 	background-color: #ddd;
 	
 	box-shadow: 3px 3px 3px #888888;*/
-	z-index: 5;
+	z-index: 1;
+	overflow: auto;
 }
 
 .menuItem {
